@@ -176,7 +176,8 @@ class Kamal::Cli::App < Kamal::Cli::Base
         roles.each do |role|
           app = KAMAL.app(role: role, host: host)
           versions = capture_with_info(*app.list_versions, raise_on_non_zero_exit: false).split("\n")
-          versions -= [ capture_with_info(*app.current_running_version, raise_on_non_zero_exit: false).strip ]
+          # 直接将 current version 停了，因为在没有 proxy 的情况下，current version 会占用需要用的端口
+          # versions -= [ capture_with_info(*app.current_running_version, raise_on_non_zero_exit: false).strip ]
 
           versions.each do |version|
             if stop
